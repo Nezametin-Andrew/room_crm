@@ -1,0 +1,266 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+
+<form id="form" method="POST" enctype="multipart/form-data">
+    <input type="hidden" id="mode" name="mode" value="" />
+        <script>
+        
+        $(document).ready(function() {
+            $("#filter_date_from, #filter_date_to").datepicker({
+                language: "ru",
+                autoclose: true
+            });
+
+            $(document).on("click", "#btnApplyFilter", btnApplyFilterOnClick);
+            $(document).on("click", "a[id ^= 'dropFinDoc']", dropFinanceDocumentOnClick);
+            $(document).on("click", "tr[id ^= 'sectionTransaction']", sectionTransactionOnClick);
+            $(document).on("click", "a[id ^= 'btnNewOperation']", btnNewOperationOnClick);
+            $(document).on("change", "#document-template_id", operationsTemplateOnChange);
+            $(document).on("change", "#document-amount, #document-act_id", operationsAmountActOnChange);
+            $(document).on("click", "#btnPerformOperations", btnPerformOperationsOnClick);
+            $(document).on("click", "a[id ^= 'pndg']", pndgOnClick);
+
+            function btnApplyFilterOnClick() {
+                period_start = $("#filter_date_from").val();
+                period_end = $("#filter_date_to").val();
+                $block = $("#block-transactions");
+                $block.empty();
+                $block.html("<p class='text-muted text-center'><i class='fas fa-cog fa-spin text-muted'></i> <small><em>пожалуйста, подождите...</em></small></p>");
+                url = "/finance_transactions?mode=ft-render-table&period_start=" + period_start + "&period_end=" + period_end + "&filter_city=";
+                
+                $block.load(url, function () {});
+
+                return false;
+            } // btnApplyFilterOnClick()
+
+            function dropFinanceDocumentOnClick() {
+                if (confirm("Будут удалены все связанные с этой операцией движения при условии, что по каждому из них в отдельности не было более поздних транзакций. Продолжить?")) {
+                    doc_id = $(this).attr("data-doc_id");
+
+                    $.post("/dogovor?mode=drop-finance-document", {doc_id: doc_id}, function (retval) {
+                        if (retval == true) {
+                            $("#mwOperationsBundle").modal("hide");
+                            location.reload();
+                        }
+                        else {
+                            $("#mwOperationsBundle").modal("hide");
+                            $("body").pgNotification({
+                                id: 'soglas',
+                                style: 'bar',
+                                message: 'Не удалось удалить операцию!',
+                                position: 'top',
+                                timeout: 15000,
+                                type: 'danger'
+                                }).show();
+                        }
+                    });
+                }
+
+                return false;
+            } // dropFinanceDocumentOnClick()
+
+            function sectionTransactionOnClick() {
+                id = $(this).attr("data-id");
+                $mwBody = $("#mwBody");
+                $("#mwHeader").html("Операция " + id);
+                $mwBody.html('<p class="text-center"><i class="fa fa-cog fa-spin fa-3x text-info"></i><span class="sr-only">Подождите...</span></p>');
+                $("#mwOperationsBundle").modal();
+                $mwBody.load("/dogovor?mode=render-transaction-details&id=" + id);
+
+                return false;
+            } // sectionTransactionOnClick()
+
+            function btnNewOperationOnClick() {
+                city_id = $(this).attr("data-id");
+                $("#mwBody").html('<p class="text-center"><i class="fa fa-cog fa-spin fa-3x text-info"></i><span class="sr-only">Подождите...</span></p>');
+                $("#mwHeader").html("Проведение операций");
+                $("#mwOperationsBundle").modal();
+                $("#mwBody").load("/dogovor?mode=render-operation-form&block_id=3&city_id=" + city_id);
+
+                return false;
+            } // btnNewOperationOnClick()
+
+            function operationsTemplateOnChange() {
+                $("#block-userdata").html("");
+                $block = $("#block-amount-act");
+                $block.html("");
+                template_id = $("#document-template_id").val();
+                $("#btnPerformOperations").remove();
+
+                if (template_id != undefined) {
+                    $block.html('<div class="form-group form-group-default text-center"><i class="fas fa-cog fa-spin text-muted"></i></div>');
+                    $block.load("/dogovor?mode=render-amountact-block&block_id=3&template_id=" + template_id);
+                }
+
+                return false;
+            } // operationsTemplateOnChange()
+
+            function operationsAmountActOnChange() {
+                $templateField = $("#document-template_id");
+                if ($templateField.length > 0) {
+                    template_id = $templateField.val();
+                    city_id = $("#document-city_id").val();
+                    $("#btnPerformOperations").remove();
+
+                    validationSuccess = false;
+                    if ($("#document-act_id").length > 0) {
+                        act_id = $("#document-act_id").val();
+                        url = "/dogovor?mode=render-userdata-block&block_id=3&template_id=" + template_id + "&act_id=" + act_id;
+                        validationSuccess = act_id != "" && act_id != undefined;
+                    }
+                    else {
+                        amount = parseFloat($("#document-amount").val().replace(",", "."));
+                        url = "/dogovor?mode=render-userdata-block&block_id=3&template_id=" + template_id + "&city_id=" + city_id + "&amount=" + amount;
+                        validationSuccess = !isNaN(amount) && template_id != undefined;
+                    }
+
+                    if (validationSuccess) {
+                        $block = $("#block-userdata");
+                        $block.html('<div class="form-group form-group-default text-center"><i class="fas fa-cog fa-spin text-muted"></i></div>');
+                        $block.load(url);
+                    }
+                }
+
+                return false;
+            } // operationsAmountActOnChange()
+
+            function btnPerformOperationsOnClick() {
+                if (confirm("Вы действительно хотите выполнить движения, перечисленные в данной форме?")) {
+                    $("#btnPerformOperations").attr("disabled","true");
+                    form = $("#frmOperationBunlde");
+                    $blockErrors = $("#block-errors");
+                    $blockErrors.html("");
+                    $.post(form.attr("action"), form.serialize(), function(retval) {
+                        retval = jQuery.parseJSON(retval);
+
+                        if (retval.result == true) {
+                            $("#mwOperationsBundle").modal("hide");
+                            $("#form").submit();
+
+                            $("body").pgNotification({
+                                id: 'soglas',
+                                style: 'bar',
+                                message: 'Операции успешно проведены.',
+                                position: 'top',
+                                timeout: 15000,
+                                type: 'success'
+                                }).show();
+                            $("#btnPerformOperations").removeAttr("disabled");
+                        }
+                        else {
+                            errors = "";
+                            $.each(retval.errors, function( index, value ) {
+                                errors += '<p>' + value + '</p>';
+                            });
+                            if (errors != "") $blockErrors.addClass("text-danger").html(errors);
+                        }
+                    });
+                }
+
+                return false;
+            } // btnPerformOperationsOnClick()
+
+            function pndgOnClick() {
+                id = $(this).attr("data-id");
+                decision = $(this).attr("data-decision");
+                prompt = $(this).attr("data-prompt");
+
+                if (decision != "" && decision != undefined && prompt != "" && prompt != undefined) {
+                    if (confirm("Вы действительно хотите " + prompt + " данную операцию?")) {
+                        $(this).attr("disabled","true");
+                        $.post("/finance_transactions?mode=process-pending", {id: id, decision: decision}, function (data) {
+                            var response = jQuery.parseJSON(data);
+                            if (response != false) {
+                                location.reload();
+                            }
+                            else {
+                                message = 'Не удалось ' + prompt + ' операцию.';
+                                $("body").pgNotification({
+                                    id: 'soglas',
+                                    style: 'bar',
+                                    message: message,
+                                    position: 'top',
+                                    timeout: 15000,
+                                    type: 'danger'
+                                    }).show();
+                            }
+                        });
+                    }
+                }
+
+                return false;
+            } // pndgOnClick()
+        });
+        
+    </script>
+    <input type="hidden" id="current_city" name="current_city" value="" />
+    <div class="row">
+        <div class="col-md-3 col-xs-12">
+            <h3 class="m-t-0 m-b-20">
+                Операции
+            </h3>
+        </div>
+        <div class="col-md-3 col-xs-12 m-b-10">
+            <div class="input-group">
+                <input type="text" class="form-control input-filter" style="width:130px;margin-right:5px;" data-date-format="dd.mm.yyyy" id="filter_date_from" value='08.02.2024' maxlength="15" placeholder="Начало периода" autocomplete="off" />
+                <input type="text" class="form-control input-filter" style="width:130px;margin-right:10px;" data-date-format="dd.mm.yyyy" id="filter_date_to" value='08.02.2024' maxlength="15" placeholder="Конец периода" autocomplete="off" />
+                <a href="#" id="btnApplyFilter" class="btn btn-complete m-r-10">Применить</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12 text-right m-b-10">
+            <div class="btn-group dropdown-default">
+                <button id="btnGroupVerticalDrop1_1" class="btn btn-success btn-cons dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><span class="bold">Добавить</span> <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="btnGroupVerticalDrop1_1">
+                                            <li><a id="btnNewOperation13" href="#" data-id="13"><i class="fas fa-plus-circle"></i> Добавить Нвр</a></li>
+                                            <li><a id="btnNewOperation20" href="#" data-id="20"><i class="fas fa-plus-circle"></i> Добавить Сочи</a></li>
+                                    </ul>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+                        <ul class="nav nav-tabs nav-tabs-fillup">
+                <li class="active"><a href="https://crm.horemo.ru/finance_transactions?filter_city=all"><span>Все</span></a></li>
+                                    <li ><a href="https://crm.horemo.ru/finance_transactions?filter_city=novorossiysk"><span>Нвр</span></a></li>
+                                    <li ><a href="https://crm.horemo.ru/finance_transactions?filter_city=sochi"><span>Сочи</span></a></li>
+                            </ul>
+                        <div id="block-transactions" class="table-responsive">
+        <table class="table table-striped table-hover" id="tblTransactions">
+        <thead>
+        <tr>
+            <th width="90" class="text-center">Дата</th>
+            <th>Счет</th>
+            <th class="text-justify">Описание / Комментарий</th>
+            <th width="150" class="text-center">Сумма</th>
+            <th width="150" class="text-center">Остаток</th>
+            <th width="150" class="text-center">Ответственный</th>
+        </tr>
+        </thead>
+        <tbody>
+                    <tr>
+                <td colspan="6">
+                    Записей нет.
+                </td>
+            </tr>
+                </tbody>
+    </table>
+    </div>
+        </div>
+    </div>
+    </form>
+<div id="mwOperationsBundle" class="modal fade slide-up" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i></button>
+                    <h3 id="mwHeader">Проведение операций</h3>
+                </div>
+                <div id="mwBody" class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

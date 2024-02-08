@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" charset="utf-8" />
+<title>Операции &mdash; Выберите раздел | CRM</title>
+<meta name="description" content='CRM' />
+<meta name="keywords" content='CRM' />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&subset=cyrillic" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
+
+<!--<script defer src="https://crm.horemo.ru/engine/font-awesome/js/all.min.js"></script>-->
+<link href="https://crm.horemo.ru/engine/font-awesome/css/all.min.css" rel="stylesheet" type="text/css" />
+
+<link href="https://crm.horemo.ru/engine/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="https://crm.horemo.ru/engine/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" media="screen" />
+
+<link href="https://crm.horemo.ru/engine/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen" />
+
+<link href="https://crm.horemo.ru/engine/switchery/css/switchery.min.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="https://crm.horemo.ru/engine/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
+<link href="https://crm.horemo.ru/engine/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css" />
+<link href="https://crm.horemo.ru/engine/parts_selector/parts-selector.css" rel="stylesheet" type="text/css" />
+<link href="https://crm.horemo.ru/engine/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="https://crm.horemo.ru/engine/lightbox2/css/lightbox.css" rel="stylesheet" type="text/css" />
+
+<link href="https://crm.horemo.ru/view/css/pages-icons.css" rel="stylesheet" type="text/css">
+<link class="main-stylesheet" href="https://crm.horemo.ru/view/css/pages.css" rel="stylesheet" type="text/css" />
+<link href="https://crm.horemo.ru/view/css/custom.css" rel="stylesheet" type="text/css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<script src="https://crm.horemo.ru/engine/modernizr.custom.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/pace/pace.min.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/jquery-easy.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/jquery-bez/jquery.bez.min.js"></script>
+<script src="https://crm.horemo.ru/engine/jquery-ios-list/jquery.ioslist.min.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/jquery-actual/jquery.actual.min.js"></script>
+<script src="https://crm.horemo.ru/engine/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script type="text/javascript" src="https://crm.horemo.ru/engine/bootstrap-select2/select2.min.js"></script>
+
+<script type="text/javascript" src="https://crm.horemo.ru/engine/classie/classie.js"></script>
+<script src="https://crm.horemo.ru/engine/switchery/js/switchery.min.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/inputmask/jquery.inputmask.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/bootstrap-datepicker/js/locales/bootstrap-datepicker.ru.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/parts_selector/parts-selector.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/jquery-nestable/jquery.nestable.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/jquery.highlight.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/bootstrap-timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
+<script src="https://crm.horemo.ru/engine/lightbox2/js/lightbox.js" type="text/javascript"></script>
+
+<!-- cropperjs -->
+<script src="https://crm.horemo.ru/engine/cropperjs/cropper.js" type="text/javascript"></script>
+
+</head>
+<body class="fixed-header menu-behind">
+
+
+   
+    
+    <script>
+        $(document).ready(function () {
+            
+                            
+                
+            $("#autocomplete_search").autocomplete({
+                source: "service.php?type=autocomplete_search",
+                minLength: 2,
+                select: function(event, ui) {
+                    if (ui.item.type == "remont"){
+                        top.location.href="https://crm.1-remont.com/dogovor?get_dogovor="+ui.item.value+"&get_step=1";
+                    }
+                    if (ui.item.type == "design"){
+                        top.location.href="https://crm.1-remont.com/dogovor_design?get_dogovor_design="+ui.item.value+"&get_step=1";
+                    }
+                    if (ui.item.type == "mebel"){
+                        top.location.href="https://crm.1-remont.com/mebel?get_dogovor="+ui.item.value+"&get_step=1";
+                    }
+                }
+            });
+            
+        });
+    </script>
+    
+    
+        
+    <div class="modal fade slide-up disable-scroll" id="prorab_osel" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <form method="POST" action="">
+                        <div class="modal-body text-center m-t-20">
+                            <h3>Добрый день,<br>Силин Дмитрий Вячеславович.<br><br>Это вы?</h3>
+                            <img src="/view/images/osel.jpg" width="50%"><br><br>
+                            <button type="submit" id="prorab_osel_submit" name="prorab_osel_submit" value="1" class="btn btn-primary btn-cons">Да</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+                            
+            <script src="/engine/ckeditor/ckeditor.js"></script>
+<script>
+    
+        $(document).ready(function () {
+            $("#form_page_info").validate({
+                onkeyup: false,
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+
+            CKEDITOR.replace('page_info_body', {
+                height: 600,
+                allowedContent: true
+            });
+        });
+    
+</script>       
+
+<form id="form_page_info" method="POST" enctype="multipart/form-data">
+    <input type="hidden" id="page_id" name="page_id" value="32" />
+    <div class="modal fade fill-in" id="pages_info_modal" role="dialog" aria-hidden="true">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i style="font-size:30px;" class="pg-close"></i>
+        </button>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="box-shadow:none;">
+                <div class="modal-header">
+                                            <h3 class="text-left p-b-5"><span class="semi-bold">Операции</h3>
+                                    </div>
+                <div class="modal-body">
+                                            <p dir="ltr"><strong>ВАЖНО!</strong> Операцию можно удалить только последнюю и в день ее создания, на следующий день удалить нельзя. Для удаления операции необходимо нажать на нее&nbsp;и в открывшемся окне выбрать&nbsp;кнопку &quot;Удалить&quot;.</p>
+
+<p dir="ltr">Для добавления операции необходимо нажать кнопку &quot;Добавить&quot;.</p>
+
+<p dir="ltr"><img height="227" src="/view/images/document_templates/1685526894-image-20230531125454-1.png" width="611" /></p>
+
+<h2 dir="ltr">1. Приход/Расход</h2>
+
+<h3>1.1 Движение&nbsp;(Зеленым цветом)</h3>
+
+<p>Зеленый цвет - означает поступление в Вашу кассу. (Увеличение фактически Денежных&nbsp;средств).</p>
+
+<p>В сплывающем окне Движение (зеленым цветом) обязательно выбрать куда поступили Денежные средства (Касса, Банк, Р/С).</p>
+
+<p>Поле &quot;От кого&quot; необходимо выбрать сотрудника от кого поступили денежные средства.</p>
+
+<h3>1.2 Движение (Красным цветом)</h3>
+
+<p>Красный цвет - означает списание в Вашей кассе. (Уменьшение фактически Денежных средств).</p>
+
+<p>В сплывающем окне Движение (красным цветом) обязательно выбрать от куда списали Денежные средства (Касса, Банк, Р/С).</p>
+
+<p>Поле &quot;Кому&quot;&nbsp;необходимо выбрать сотрудника кому&nbsp;отправили денежные средства.</p>
+
+<h2>2. Перемещение</h2>
+
+<h3>2.1. Счет-источник/ Счет-получатель</h3>
+
+<p>Движение 1 (Красным цветом) - означает списание денежных средств. Движение 2 (Зеленым цветом) - означает поступление денежных средств.</p>
+
+<h3>2.2. Блокировка счета</h3>
+
+<p>При переводе на счет другого ответственного лица указанный&nbsp;счет в Движении 1 будет заблокирован, Вы не сможете проводить транзакции по нему до тех пор, пока ответственный по счету-получателю не подтвердит эту операцию. Вы также можете отозвать ее самостоятельно до момента согласования получателем.</p>
+
+<h3>2.3. Сбой в счете</h3>
+
+<p>Одновременно нельзя ставить несколько перемещений, т.к. может произойти сбой в счете и сумма с фактическим счетом может не сходиться. Между перемещениями должно пройти более 1 минуты.</p>
+
+<p>&nbsp;</p>
+                                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Отменить</button>
+                                    </div>
+            </div>
+        </div>
+    </div>
+</form>        
+    <nav class="page-sidebar" data-pages="sidebar">
+        <div class="sidebar-menu m-t-80">
+            <ul class="menu-items">
+                                                            <li  class="">
+                            <a href="/dogovor_design"><span class="title">Дизайн</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-file-image'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/dogovor"><span class="title">Ремонт</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-briefcase'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/mebel"><span class="title">Мебель</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-couch'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/soglasovanie"><span class="title">Согласование</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-check-circle'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/finance_reports"><span class="title">Отчеты</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-chart-line'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/finance_transactions"><span class="title">Операции</span></a>
+                            <span class="bg-success icon-thumbnail"><i class='far fa-money-bill-alt'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/acts"><span class="title">Акты</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-flag-checkered'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/smeta2"><span class="title">Сметы 2</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-calculator'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/price"><span class="title">Прайс-лист 2</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-list-ul'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/clients"><span class="title">Клиенты</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-address-book'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/products"><span class="title">Материалы</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-barcode'></i></span>
+                        </li>
+                                                                                <li  class="">
+                            <a href="/users"><span class="title">Сотрудники</span></a>
+                            <span class=" icon-thumbnail"><i class='fas fa-users'></i></span>
+                        </li>
+                                                                                <li                            class=" invis">
+                            <a href="javascript:;"><span class="title">Настройки</span><span class="arrow"></span></a><span class="icon-thumbnail"><i class='fas fa-cogs'></i></span>
+                            <ul class="sub-menu">
+                                                                                                                                                                                <li  class=""><a href="https://crm.horemo.ru/documents">Документы</a><span class="icon-thumbnail"><i class='fas fa-file-alt'></i></span></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                <li  class="invis_important"><a href="https://crm.horemo.ru/design_tariff">Тарифы дизайн</a><span class="icon-thumbnail"><i class='fas fa-paint-brush'></i></span></li>
+                                                                                                                                                                                                                    <li  class="invis_important"><a href="https://crm.horemo.ru/finance_operations">Счета</a><span class="icon-thumbnail"><i class='far fa-money-bill-alt'></i></span></li>
+                                                                                                                                                <li  class=""><a href="https://crm.horemo.ru/city">Города</a><span class="icon-thumbnail"><i class='fas fa-city'></i></span></li>
+                                                                                                                                                <li  class="invis_important"><a href="https://crm.horemo.ru/shedule">Календарь</a><span class="icon-thumbnail"><i class='far fa-calendar-alt'></i></span></li>
+                                                                                                                                                <li  class="invis_important"><a href="https://crm.horemo.ru/remont_tariff">Тарифы ремонт</a><span class="icon-thumbnail"><i class='fas fa-paint-brush'></i></span></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <li  class="invis_important"><a href="https://crm.horemo.ru/robots_settings">Роботы</a><span class="icon-thumbnail"><i class='fas fa-robot'></i></span></li>
+                                                                                                                                                <li  class="invis_important"><a href="https://crm.horemo.ru/camera_settings">Камеры</a><span class="icon-thumbnail"><i class='fas fa-video'></i></span></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                <li  class="invis_important"><a href="https://crm.horemo.ru/emitents">Настройки партнера</a><span class="icon-thumbnail"><i class='fas fa-user-tie'></i></span></li>
+                                                                                                                                                                                                                    <li  class="invis_important"><a href="https://crm.horemo.ru/techcard">Чек-листы ремонт</a><span class="icon-thumbnail"><i class='fas fa-tools'></i></span></li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li  class=""><a href="https://crm.horemo.ru/companies">Компании</a><span class="icon-thumbnail"><i class='far fa-building'></i></span></li>
+                                                                                                                                                                                                                    <li  class="invis_important"><a href="https://crm.horemo.ru/tags">Теги</a><span class="icon-thumbnail"><i class='fas fa-hashtag'></i></span></li>
+                                                                                                                                                <li  class=""><a href="https://crm.horemo.ru/site_projects">Проекты на сайт</a><span class="icon-thumbnail"><i class='fas fa-desktop'></i></span></li>
+                                                                                                                                                                                                                    <li  class="invis_important"><a href="https://crm.horemo.ru/otk_report_settings">Отчеты ОТК</a><span class="icon-thumbnail"><i class='fas fa-file-alt'></i></span></li>
+                                                                                                                                                <li  class="invis_important"><a href="https://crm.horemo.ru/mail_settings">Почта</a><span class="icon-thumbnail"><i class='fas fa-at'></i></span></li>
+                                                                                                                                                                                                                                                                                                            </ul>
+                        </li>
+                                                    <li onclick="top.location.href = 'https://crm.horemo.ru/logout'" class="">
+                    <a href="/logout"><span class="title">Выход</span></a>
+                    <span class="icon-thumbnail"><i class='fa fa-power-off'></i></span>
+                </li>
+                            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </nav>
+
+<div class="page-container" style="">
+    <div class="header ">
+        <!-- START MOBILE CONTROLS -->
+        <div class="container-fluid relative">
+                            <div class="pull-left full-height visible-sm visible-xs">
+                    <div class="header-inner">
+                        <a href="#" class="btn-link toggle-sidebar visible-sm-inline-block visible-xs-inline-block padding-5" data-toggle="sidebar">
+                            <span class="icon-set menu-hambuger"></span>
+                        </a>
+                    </div>
+                </div>
+                        <div class="pull-center hidden-md hidden-lg">
+                <div class="header-inner">
+                    <div class="brand inline"><strong><a href="https://crm.horemo.ru">Аквариус</a></strong></div>
+                </div>
+            </div>
+                
+                
+            
+            <div class="pull-right m-l-10 p-t-15 hidden-md hidden-lg">
+                <a href="#" data-target="#pages_info_modal" data-toggle="modal"><i style="font-size:24px;" class="fas fa-question-circle"></i></a>
+            </div>
+            
+            <div class="pull-right hidden-md hidden-lg">
+                <div class="header-inner">
+                    <span class="thumbnail-wrapper d32 circular inline m-t-5">
+<!--                        <a href="https://crm.horemo.ru/profile" style="line-height: unset;"><img style="width:100%;height: 100%;" src="https://crm.horemo.ru/view/images/users/430/3.jpg?cache=1707391075" /></a>-->
+                        <img onclick="top.location.href = 'https://crm.horemo.ru/profile'" src="https://crm.horemo.ru/view/images/users/430/3.jpg?cache=1707391075" />
+                    </span>
+                </div>
+            </div>
+            
+        </div>
+        <!-- END MOBILE CONTROLS -->
+
+        <div class=" pull-left sm-table hidden-xs hidden-sm">
+            <div class="header-inner">
+                <div class="brand" style="display:flex;">
+                    <h2><a href="https://crm.horemo.ru"><img class="main_logo" src="https://crm.horemo.ru/view/images/emitents/1/logo.png?1707391075">Аквариус</a></h2>
+                                                                                                        <div class="input-group m-l-50" style="height:35px;padding-top:13px;">
+                                    <input style="width:300px;" type="text" id="autocomplete_search" class="form-control" placeholder="Поиск по договору или клиенту">
+                                    <span class="input-group-addon btn btn-primary">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </div>
+                                                                                        </div>
+            </div>
+        </div>
+        <div class="pull-right m-l-10 p-t-15 hidden-xs">
+            <a href="#" data-target="#pages_info_modal" data-toggle="modal"><i style="font-size:24px;" class="fas fa-question-circle"></i></a>
+        </div>
+                                                                            <div class="pull-right">
+                <div class="visible-lg visible-md m-t-10">
+                    <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
+                        <span class="semi-bold">
+                            <a href="https://crm.horemo.ru/profile">Силин Дмитрий Вячеславович</a>
+                        </span>
+                    </div>
+
+                    
+                    <div class="pull-right">
+                        <span class="thumbnail-wrapper d32 circular inline m-t-5">
+                            <!--    						<i class="fas fa-user-circle" style="font-size:32px"></i>-->
+                            <img style="width:100%;" src="https://crm.horemo.ru/view/images/users/430/3.jpg?cache=1707391075" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="page-content-wrapper ">
+        <div class="content sm-gutter">
+            <div class="container-fluid padding-25 sm-padding-10">
+                {% block content %}
+                             
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+</div>   	
+<script src="https://crm.horemo.ru/engine/pages.js"></script>
+<script src="https://crm.horemo.ru/engine/scripts.js" type="text/javascript"></script>
+
+</body>
+</html>
