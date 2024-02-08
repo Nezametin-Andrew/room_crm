@@ -2,3 +2,4 @@ venv/
 .idea/
 room_crm/src/transactions/migrations/
 *.pyc
+room_crm/db.sqlite3
